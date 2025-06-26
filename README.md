@@ -25,6 +25,7 @@ This repository is an example backend application demonstrating how to build a m
    ```sh
    git clone https://github.com/your-username/fast-psql.git
    cd fast-psql
+   ```
 
 2. **Open in VS Code and Reopen in Dev Container:**
     Open the folder in VS Code.
@@ -38,20 +39,16 @@ This repository is an example backend application demonstrating how to build a m
     Enable pre-commit hooks and code linting/formatting
 
 
-## Running the Application
+### Running the Application
+   - With Docker Compose: `docker-compose up` </br>
+     The API will be available at http://localhost:8000.
 
-### With Docker Compose:
-    docker-compose up
-    The API will be available at http://localhost:8000.
-
-### With Dev Container:
-    Use the integrated terminal to run:
-    - **uvicorn src.main:app --reload --host 0.0.0.0 --port 8000**
+   - With Dev Container: </br>
+      Use the integrated terminal to run:</br>
+      `uvicorn src.main:app --reload --host 0.0.0.0 --port 8000`</br>
+      You can also use the VS Code debugger: select "Python: FastAPI (main.py)" in the Run & Debug panel and start debugging.
     
-    You can also use the VS Code debugger: select "Python: FastAPI (main.py)" in the Run & Debug panel and start debugging.
-    
-
-## Code Quality
-    Ruff is used for linting and formatting.
-    Run manually with:
-    pre-commit hooks run automatically on commit to enforce code style and quality.
+## Code Quality 
+ Ruff is used for linting and formatting.
+ Run manually with: `pre-commit run --all-files`
+ on commit to ensure code style and quality.
