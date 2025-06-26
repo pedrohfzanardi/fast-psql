@@ -1,0 +1,28 @@
+{
+    "name": "fast-psql-dev",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },      
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "charliermarsh.ruff",
+                "njpwerner.autodocstring",
+                "redhat.vscode-yaml",
+                "github.copilot"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python3"
+            }
+        }
+    },
+    "containerEnv": {
+        "PYTHONUNBUFFERED": "1",
+        "PYTHONPATH": "/workspace"
+    },
+    "postCreateCommand": "export UV_LINK_MODE=copy && uv sync --frozen",
+    "remoteUser": "vscode"
+}
