@@ -16,6 +16,14 @@
             ],
             "settings": {
                 "python.defaultInterpreterPath": "/usr/local/bin/python3"
+            },
+            "[python]": {
+                "editor.defaultFormatter": "charliermarsh.ruff",
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.organizeImports": true,
+                    "source.fixAll.ruff": true
+                }
             }
         }
     },
@@ -23,6 +31,6 @@
         "PYTHONUNBUFFERED": "1",
         "PYTHONPATH": "/workspace"
     },
-    "postCreateCommand": "export UV_LINK_MODE=copy && uv sync --frozen",
+    "postCreateCommand": "export UV_LINK_MODE=copy && uv venv && uv sync --frozen",
     "remoteUser": "vscode"
 }
