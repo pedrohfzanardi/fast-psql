@@ -1,9 +1,9 @@
 {
     "name": "fast-psql-dev",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "context": ".."
-    },      
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "forwardPorts": [8000],
     "customizations": {
         "vscode": {
             "extensions": [
@@ -24,10 +24,6 @@
                 }
             }
         }
-    },
-    "containerEnv": {
-        "PYTHONUNBUFFERED": "1",
-        "PYTHONPATH": "/workspace/src"
     },
     "postCreateCommand": "export UV_LINK_MODE=copy && uv venv && uv sync --frozen",
     "remoteUser": "vscode"
