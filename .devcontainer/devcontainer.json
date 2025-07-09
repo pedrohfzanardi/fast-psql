@@ -3,7 +3,7 @@
     "dockerComposeFile": "docker-compose.yml",
     "service": "app",
     "workspaceFolder": "/workspace",
-    "forwardPorts": [8000],
+    "forwardPorts": [8000, 5432],
     "customizations": {
         "vscode": {
             "extensions": [
@@ -26,5 +26,6 @@
         }
     },
     "postCreateCommand": "export UV_LINK_MODE=copy && uv venv && uv sync --frozen",
+    "shutdownAction": "stopCompose",
     "remoteUser": "vscode"
 }

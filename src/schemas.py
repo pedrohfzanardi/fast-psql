@@ -19,3 +19,8 @@ class ItemResponse(ItemBase):
 class ItemCreate(ItemBase):
     name: str = Field(..., example=f"Item {len(itens) + 1}")
     description: str = Field(..., example=f"Description for Item {len(itens) + 1}")
+
+
+class ItemUpdate(ItemBase):
+    name: str | None = Field(None)
+    description: str | None = Field(None)
