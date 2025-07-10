@@ -1,6 +1,6 @@
-from typing import Annotated, Iterator
+import os
+from typing import Iterator
 
-from fastapi import Depends
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, declarative_base, sessionmaker
@@ -8,7 +8,18 @@ from sqlalchemy.orm import Session, declarative_base, sessionmaker
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "fast-psql"
-    DATABASE_URL: str
+    POSTGRES_DB: str = os.getenv("POSTGRES_DB", "fast-psql")
+    POSTGRES_USER: str = os.getenv("POSTGRES_USER", "postgres")
+    POSTGRES_PASSWORD: str = os.getenv("POSTGRES_PASSWORD", "postgres")
+    POSTGRES_HOST: str = os.getenv("POSTGRES_HOST", "localhost")
+    POSTGRES_PORT: str = os.getenv("POSTGRES_PORT", "5432")
+
+    @property
+    def DATABASE_URL(self) -> str:
+        return (
+            f"postgresql+psycopg2://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
+            f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+        )
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -28,6 +39,3 @@ def get_db() -> Iterator[Session]:
         yield db
     finally:
         db.close()
-
-
-SessionDB = Annotated[Session, Depends(get_db)]
