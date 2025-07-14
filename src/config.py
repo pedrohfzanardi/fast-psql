@@ -1,9 +1,6 @@
 import os
-from typing import Iterator
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, declarative_base, sessionmaker
 
 
 class Settings(BaseSettings):
@@ -28,14 +25,3 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-engine = create_engine(Settings().DATABASE_URL)
-session = sessionmaker(bind=engine)
-Base = declarative_base()
-
-
-def get_db() -> Iterator[Session]:
-    db = session()
-    try:
-        yield db
-    finally:
-        db.close()

@@ -1,23 +1,23 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 
-from config import db_dependency, item_service_dependency
 from schemas import ItemBase, ItemCreate, ItemResponse
 from schemas import itens as itens_list
+from service import ItemService, get_item_service
 
 router = APIRouter()
 
 
 @router.get("/list-items", response_model=list[ItemResponse])
-def get_items(db: db_dependency, item_service: item_service_dependency):
-    items = item_service.get_all_items(db)
+def get_items(item_service: ItemService = Depends(get_item_service)):
+    items = item_service.get_all_items()
     if items:
         return items
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No items found")
 
 
 @router.get("/list-item", response_model=ItemResponse)
-def get_item(item_id: int, item_service: item_service_dependency, db: db_dependency):
-    item = item_service.get_item_by_id(db, item_id)
+def get_item(item_id: int, item_service: ItemService = Depends(get_item_service)):
+    item = item_service.get_item_by_id(item_id)
     if item:
         return item
     raise HTTPException(
@@ -27,9 +27,9 @@ def get_item(item_id: int, item_service: item_service_dependency, db: db_depende
 
 @router.post("/add-item", response_model=ItemResponse)
 def create_item(
-    item: ItemCreate, item_service: item_service_dependency, db: db_dependency
+    item: ItemCreate, item_service: ItemService = Depends(get_item_service)
 ):
-    created_item = item_service.create_item(db, item)
+    created_item = item_service.create_item(item)
     return created_item
 
 
