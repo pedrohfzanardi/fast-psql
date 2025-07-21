@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 itens = [
     {"id": 1, "name": "Item 1", "description": "Description for Item 1"},
@@ -13,14 +13,14 @@ class ItemBase(BaseModel):
 
 
 class ItemResponse(ItemBase):
-    id: int = Field(...)
+    id: int = None
 
 
 class ItemCreate(ItemBase):
-    name: str = Field(..., example=f"Item {len(itens) + 1}")
-    description: str = Field(..., example=f"Description for Item {len(itens) + 1}")
+    name: str = None
+    description: str = None
 
 
 class ItemUpdate(ItemBase):
-    name: str | None = Field(None)
-    description: str | None = Field(None)
+    name: str | None = None
+    description: str | None = None
